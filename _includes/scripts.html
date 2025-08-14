@@ -3,6 +3,26 @@
 <!-- 不蒜子统计 - 智能加载 -->
 {% unless site.development_mode %}
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- 统计加载完成提示 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 检查是否为主页
+  var isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+  
+  // 为主页添加统计加载完成提示
+  if (isHomePage) {
+    setTimeout(function() {
+      var sitePv = document.getElementById('busuanzi_value_site_pv');
+      var siteUv = document.getElementById('busuanzi_value_site_uv');
+      
+      // 确保主页的统计数据加载完成
+      if (sitePv && sitePv.textContent !== '-') {
+        console.log('主页访问量统计已加载:', sitePv.textContent);
+      }
+    }, 2000);
+  }
+});
+</script>
 {% else %}
 <!-- 开发环境模拟统计数据 -->
 <script>

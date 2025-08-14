@@ -114,4 +114,87 @@
     color: #777;
     margin-right: 3px;
   }
+  
+  #site-pv-counter {
+    transition: opacity 0.3s ease;
+  }
+}
+
+/* 主页统计区域样式 - 适当缩放优化 */
+.homepage-stats {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  padding: 1.5rem; /* 减少内边距 */
+  margin: 2.5rem auto 1.5rem auto; /* 减少边距，并居中 */
+  max-width: 500px; /* 限制最大宽度 */
+  text-align: center;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+  position: relative;
+  
+  /* 添加顶部装饰线 */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px; /* 缩小装饰线 */
+    height: 2px;
+    background: linear-gradient(90deg, #7c4dff 0%, #9c88ff 100%);
+    border-radius: 0 0 2px 2px;
+  }
+  
+  h3 {
+    color: #495057;
+    margin-bottom: 1rem;
+    margin-top: 0.3rem;
+    font-weight: 600;
+    font-size: 1.1rem; /* 减小标题字体 */
+    
+    .fa-chart-line {
+      color: #7c4dff;
+      margin-right: 0.4rem;
+      font-size: 1em;
+    }
+  }
+  
+  p {
+    font-size: 1em; /* 减小字体大小 */
+    margin: 0;
+    color: #6c757d;
+    
+    span {
+      display: inline-block;
+      margin: 0.3rem 0.8rem; /* 减少间距 */
+      padding: 0.4rem 0.8rem; /* 减少内边距 */
+      background: rgba(124, 77, 255, 0.08);
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      font-size: 0.95em; /* 稍微减小字体 */
+      
+      &:hover {
+        background: rgba(124, 77, 255, 0.12);
+        transform: translateY(-1px);
+      }
+      
+      @media (max-width: 768px) {
+        display: block;
+        margin: 0.5rem auto;
+        width: fit-content;
+      }
+    }
+    
+    .fa-globe, .fa-users {
+      color: #7c4dff;
+      margin-right: 0.4rem;
+      font-size: 1em;
+    }
+    
+    strong {
+      color: #7c4dff;
+      font-weight: 700;
+      font-size: 1.05em;
+    }
+  }
 }
