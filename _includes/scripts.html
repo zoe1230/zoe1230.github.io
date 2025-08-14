@@ -2,24 +2,45 @@
 
 <!-- 不蒜子统计 - 智能加载 -->
 {% unless site.development_mode %}
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<!-- 统计加载完成提示 -->
+<!-- 根据页面类型智能加载不蒜子统计脚本 -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // 检查是否为主页
+  // 检查页面类型
   var isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+  var isPostPage = document.querySelector('.busuanzi_value_pv'); // 检查是否有文章浏览量元素
   
-  // 为主页添加统计加载完成提示
-  if (isHomePage) {
+  // 主页或文章页面才加载不蒜子统计脚本
+  if (isHomePage || isPostPage) {
+    // 动态加载不蒜子脚本
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+    document.head.appendChild(script);
+    
+    // 统计加载完成提示
     setTimeout(function() {
-      var sitePv = document.getElementById('busuanzi_value_site_pv');
-      var siteUv = document.getElementById('busuanzi_value_site_uv');
-      
-      // 确保主页的统计数据加载完成
-      if (sitePv && sitePv.textContent !== '-') {
-        console.log('主页访问量统计已加载:', sitePv.textContent);
+      if (isHomePage) {
+        var sitePv = document.getElementById('busuanzi_value_site_pv');
+        var siteUv = document.getElementById('busuanzi_value_site_uv');
+        
+        // 确保主页的统计数据加载完成
+        if (sitePv && sitePv.textContent !== '-') {
+          console.log('主页访问量统计已加载:', sitePv.textContent);
+        }
+      } else if (isPostPage) {
+        // 文章页面浏览量统计
+        var postPv = document.querySelector('.busuanzi_value_pv');
+        if (postPv && postPv.textContent !== '-') {
+          console.log('文章浏览量统计已加载:', postPv.textContent);
+        }
       }
     }, 2000);
+  } else {
+    // 其他页面隐藏统计元素（如果存在的话）
+    var statsElements = document.querySelectorAll('.homepage-stats, [id*="busuanzi"], .busuanzi_value_pv');
+    statsElements.forEach(function(element) {
+      element.style.display = 'none';
+    });
   }
 });
 </script>
@@ -27,22 +48,38 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 开发环境模拟统计数据 -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // 模拟不蒜子统计数据
-  setTimeout(function() {
-    // 模拟文章浏览量
-    var pvElements = document.querySelectorAll('.busuanzi_value_pv');
-    pvElements.forEach(function(el, index) {
-      el.textContent = Math.floor(Math.random() * 500) + 10; // 10-510之间的随机数
+  // 检查页面类型
+  var isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+  var isPostPage = document.querySelector('.busuanzi_value_pv'); // 检查是否有文章浏览量元素
+  
+  // 只在主页或文章页面模拟统计数据
+  if (isHomePage || isPostPage) {
+    // 模拟不蒜子统计数据
+    setTimeout(function() {
+      // 模拟文章浏览量
+      if (isPostPage) {
+        var pvElements = document.querySelectorAll('.busuanzi_value_pv');
+        pvElements.forEach(function(el, index) {
+          el.textContent = Math.floor(Math.random() * 500) + 10; // 10-510之间的随机数
+        });
+      }
+      
+      // 模拟主页统计
+      if (isHomePage) {
+        var sitePv = document.getElementById('busuanzi_value_site_pv');
+        if (sitePv) sitePv.textContent = '262,920';
+        
+        var siteUv = document.getElementById('busuanzi_value_site_uv');
+        if (siteUv) siteUv.textContent = '62,138';
+      }
+    }, 500); // 延迟500ms模拟加载过程
+  } else {
+    // 其他页面隐藏统计元素
+    var statsElements = document.querySelectorAll('.homepage-stats, [id*="busuanzi"], .busuanzi_value_pv');
+    statsElements.forEach(function(element) {
+      element.style.display = 'none';
     });
-    
-    // 模拟网站总访问量
-    var sitePv = document.getElementById('busuanzi_value_site_pv');
-    if (sitePv) sitePv.textContent = '262,920';
-    
-    // 模拟访客数
-    var siteUv = document.getElementById('busuanzi_value_site_uv');
-    if (siteUv) siteUv.textContent = '62,138';
-  }, 500); // 延迟500ms模拟加载过程
+  }
 });
 </script>
 {% endunless %}
