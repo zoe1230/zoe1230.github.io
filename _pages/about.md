@@ -26,23 +26,3 @@ Research Interests
 * 3D Vision and Image Processing
 
 <br>
-
-<!-- Current Work
-====== -->
-
-<!-- 主页访问统计 - 移至页面末尾 -->
-<div class="homepage-stats">
-  <h3>
-    <i class="fa fa-chart-line" aria-hidden="true"></i> 网站统计
-  </h3>
-  <p>
-    <span>
-      <i class="fa fa-globe" aria-hidden="true"></i> 
-      总访问量 <strong><span id="busuanzi_value_site_pv">-</span></strong> 次
-    </span>
-    <span>
-      <i class="fa fa-users" aria-hidden="true"></i> 
-      访客数 <strong><span id="busuanzi_value_site_uv">-</span></strong> 人
-    </span>
-  </p>
-</div>
