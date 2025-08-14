@@ -1,0 +1,11 @@
+# Development Configuration
+# This file overrides _config.yml settings for local development
+
+# Enable development mode to use mock statistics
+development_mode: true
+
+# Local development URL
+url: "http://localhost:4000"
+
+# Keep other settings from main config
+# This file should be used with: bundle exec jekyll serve --config _config.yml,_config_dev.yml

@@ -1,3 +1,30 @@
 <script type="module" src="{{ base_path }}/assets/js/main.min.js"></script>
 
+<!-- 不蒜子统计 - 智能加载 -->
+{% unless site.development_mode %}
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+{% else %}
+<!-- 开发环境模拟统计数据 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 模拟不蒜子统计数据
+  setTimeout(function() {
+    // 模拟文章浏览量
+    var pvElements = document.querySelectorAll('.busuanzi_value_pv');
+    pvElements.forEach(function(el, index) {
+      el.textContent = Math.floor(Math.random() * 500) + 10; // 10-510之间的随机数
+    });
+    
+    // 模拟网站总访问量
+    var sitePv = document.getElementById('busuanzi_value_site_pv');
+    if (sitePv) sitePv.textContent = '262,920';
+    
+    // 模拟访客数
+    var siteUv = document.getElementById('busuanzi_value_site_uv');
+    if (siteUv) siteUv.textContent = '62,138';
+  }, 500); // 延迟500ms模拟加载过程
+});
+</script>
+{% endunless %}
+
 {% include analytics.html %}

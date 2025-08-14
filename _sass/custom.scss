@@ -1,0 +1,117 @@
+/*
+ * Custom styles for navigation centering and page titles
+ */
+
+/* Center the main navigation items while preserving original structure */
+.masthead__inner-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.masthead__menu {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.greedy-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Center visible links but keep original functionality */
+.visible-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  
+  li {
+    margin: 0 0.5rem;
+  }
+}
+
+/* Keep the original theme toggle and hamburger menu functionality */
+.greedy-nav button {
+  margin-left: auto;
+}
+
+#theme-toggle {
+  margin-left: auto !important;
+}
+
+/* Center page titles for Blog Posts and CV pages */
+.page__title {
+  text-align: center !important;
+}
+
+/* Do NOT center archive subtitles (year titles) but make them larger */
+.archive__subtitle {
+  text-align: left !important;
+  font-size: 2rem !important;
+  font-weight: bold !important;
+  margin-bottom: 1rem !important;
+  margin-top: 1 !important;
+}
+
+/* Center titles in archive layout */
+.layout--archive {
+  .page__title {
+    text-align: center !important;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .masthead__inner-wrap {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .visible-links {
+    justify-content: center;
+    margin-bottom: 1rem;
+    
+    li {
+      margin: 0 0.3rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .visible-links {
+    justify-content: center;
+    flex-wrap: wrap;
+    
+    li {
+      margin: 0.2rem 0.3rem;
+    }
+  }
+}
+
+/* 浏览量统计样式 */
+.page__date {
+  .fa-eye {
+    color: #7c4dff;
+  }
+}
+
+.busuanzi_value_pv, .busuanzi_value_site_pv, .busuanzi_value_site_uv {
+  font-weight: 600;
+  color: #7c4dff;
+}
+
+/* 页脚统计样式 */
+.page__footer-copyright {
+  text-align: center;
+  
+  .fa-globe, .fa-user {
+    color: #777;
+    margin-right: 3px;
+  }
+}

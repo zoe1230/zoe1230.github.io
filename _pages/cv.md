@@ -1,64 +1,40 @@
 ---
 layout: archive
-title: "CV"
+title: "Curriculum Vitae"
 permalink: /cv/
 author_profile: true
 redirect_from:
   - /resume
 ---
 
+<style>
+.page__title {
+  text-align: center !important;
+}
+</style>
+
 {% include base_path %}
 
 Education
 ======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
-
-Work experience
-======
-* Spring 2024: Academic Pages Collaborator
-  * GitHub University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
-
-* Fall 2015: Research Assistant
-  * GitHub University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
-
-* Summer 2015: Research Assistant
-  * GitHub University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
+* **M.S. in Instrument Science and Technology**, Tianjin University, 2026 (expected)
+  * Research Focus: Computer Vision and Industrial Applications
+  * Advisor: Yanbiao Sun
   
-Skills
-======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+* **B.S. in Control Technology and Instruments**, Tianjin University, 2023
+  * Relevant Coursework: Digital Image Processing, Control Systems
 
-Publications
+Research Experience
 ======
-  <ul>{% for post in site.publications reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Talks
+* **Research Intern** (Summer 2024)
+  * Company: Santachi
+  * Duties: Computer vision algorithm development and optimization
+  * Achievements: Research on vision algorithms for anti-external damage systems in power transmission scenarios
+
+Technical Skills
 ======
-  <ul>{% for post in site.talks reversed %}
-    {% include archive-single-talk-cv.html  %}
-  {% endfor %}</ul>
-  
-Teaching
-======
-  <ul>{% for post in site.teaching reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Service and leadership
-======
-* Currently signed in to 43 different slack teams
+* **Programming Languages:** Python, C++
+* **Computer Vision:** OpenCV, PCL, 3D Vision, Image Processing
+* **Machine Learning:** PyTorch, Cuda
+* **Development Tools:** Git, Docker, Linux
+* **Languages:** Chinese (Native), English (Fluent)
