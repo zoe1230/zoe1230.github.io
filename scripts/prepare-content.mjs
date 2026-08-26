@@ -11,6 +11,7 @@ const jobs = [
   },
   {
     src: resolve(root, '../tutorial-fine-detail-depth'),
+    fallback: resolve(root, 'tutorials/fine-detail-depth'),
     dest: resolve(root, 'fine-detail-depth'),
   },
 ]
@@ -39,11 +40,13 @@ function ensureIndex(dest) {
 }
 
 for (const job of jobs) {
+  const destHasReadme = existsSync(join(job.dest, 'README.md'))
   const copied = copyMarkdown(job.src, job.dest)
-  console.log(
-    copied
-      ? `prepare-content: copied markdown from ${job.src}`
-      : `prepare-content: no sibling source at ${job.src}; using ${job.dest}`,
-  )
+  const fromFallback =
+    !copied && !destHasReadme && job.fallback
+      ? copyMarkdown(job.fallback, job.dest)
+      : false
+  const source = copied ? job.src : fromFallback ? job.fallback : job.dest
+  console.log(`prepare-content: using markdown from ${source}`)
   ensureIndex(job.dest)
 }

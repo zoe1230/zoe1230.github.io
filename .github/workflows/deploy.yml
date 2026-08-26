@@ -32,6 +32,7 @@ jobs:
           fetch-depth: 0
 
       - name: Checkout fine-detail-depth tutorial
+        continue-on-error: true
         uses: actions/checkout@v5
         with:
           repository: zoe1230/tutorial-fine-detail-depth
