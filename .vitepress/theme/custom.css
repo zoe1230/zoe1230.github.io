@@ -1,0 +1,164 @@
+/* Keep wide tables usable on smaller viewports */
+.vp-doc table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* Math blocks: allow horizontal scroll when formulas are long */
+.vp-doc mjx-container[display='true'],
+.vp-doc .math-display,
+.vp-doc .MathJax {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+.home-avatar {
+  float: right;
+  width: 148px;
+  height: 148px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 0 0 1.25rem 1.5rem;
+}
+
+.home-clear {
+  clear: both;
+}
+
+.vp-doc .pub-entry {
+  margin: 0 0 1.5rem;
+}
+
+.vp-doc .pub-entry p {
+  margin: 0.2rem 0;
+}
+
+.mermaid-viewport {
+  position: relative;
+  overflow: hidden;
+  margin: 1.25rem 0;
+  min-height: min(56vh, 520px);
+  max-height: min(72vh, 680px);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+}
+
+.mermaid-canvas {
+  width: 100%;
+  height: min(56vh, 520px);
+  max-height: min(72vh, 680px);
+  overflow: auto;
+  cursor: grab;
+  touch-action: none;
+  scrollbar-width: none;
+}
+
+.mermaid-canvas::-webkit-scrollbar {
+  display: none;
+}
+
+.mermaid-viewport.is-panning .mermaid-canvas {
+  cursor: grabbing;
+}
+
+.mermaid-viewport .mermaid,
+.mermaid-viewport div.mermaid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 1.25rem;
+  font-family: 'trebuchet ms', verdana, arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.mermaid-scaler {
+  position: relative;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+
+.mermaid-viewport .mermaid svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  max-width: none !important;
+  overflow: visible;
+}
+
+.mermaid-zoom-controls {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 3;
+  display: flex;
+  gap: 4px;
+  pointer-events: auto;
+}
+
+.mermaid-zoom-controls button {
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 0.45rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 6px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.mermaid-zoom-controls button:hover {
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
+}
+
+.vp-doc .mermaid:not(.mermaid-viewport .mermaid),
+.vp-doc div.mermaid:not(.mermaid-viewport .mermaid) {
+  display: flex;
+  justify-content: center;
+  margin: 1.25rem 0;
+}
+
+.vp-doc .mermaid p,
+.vp-doc .mermaid .nodeLabel p,
+.vp-doc .mermaid .edgeLabel p {
+  margin: 0;
+  line-height: inherit;
+}
+
+.vp-doc .mermaid a {
+  font-weight: inherit;
+  color: inherit;
+  text-decoration: none;
+}
+
+.vp-doc .mermaid .nodeLabel,
+.vp-doc .mermaid .edgeLabel,
+.vp-doc .mermaid .label,
+.mermaid-viewport .mermaid .nodeLabel,
+.mermaid-viewport .mermaid .edgeLabel {
+  box-sizing: content-box;
+  font-family: 'trebuchet ms', verdana, arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .home-avatar {
+    float: none;
+    display: block;
+    margin: 0 0 1rem;
+  }
+}
