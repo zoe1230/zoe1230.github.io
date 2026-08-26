@@ -50,7 +50,7 @@
 
 ## 4. 工作区 16 数据集：PXDepth 与 MoGe-3 的同协议比较
 
-【本地实测】完整来源：[MoGe-3 与 PXDepth：同一 PXDepth 协议评测](../../moge3/results/comparison.md)。相同 16 个数据集和样本索引、PXDepth 数据变换、1022×770 等面积输入、FP16、PXDepth log-depth affine 对齐与指标实现；MoGe-3 使用 3 次 SSR。
+【本地实测】MoGe-3 与 PXDepth 使用相同的 16 个数据集和样本索引、PXDepth 数据变换、1022×770 等面积输入、FP16、PXDepth log-depth affine 对齐与指标实现；MoGe-3 使用 3 次 SSR。
 
 ### 4.1 全局深度
 
@@ -98,7 +98,7 @@ PXDepth只计 model forward；MoGe-3 的 `model.infer()` 含三次 SSR、深度/
 
 ## 5. Spring 1000 帧：深度值与边缘连续性的分离
 
-【本地实测】完整来源：[Spring 细结构深度评测](../../moge3/results/spring/comparison.md)。统一输入 1176×672、FP16、MoGe-3 ViT-L 三步；两者使用同一 robust `log1p-depth` affine alignment。公开 Spring 包缺少 MoGe-3 论文所需 SAM2 masks，因此本地 coarse mask 不能冒充论文 local protocol。
+【本地实测】Spring 细结构评测统一使用 1176×672 输入、FP16 和 MoGe-3 ViT-L 三步 refinement；两者使用同一 robust `log1p-depth` affine alignment。公开 Spring 包缺少 MoGe-3 论文所需 SAM2 masks，因此本地 coarse mask 不能冒充论文 local protocol。
 
 ### 5.1 细结构深度数值
 
@@ -200,7 +200,7 @@ MoGe-3直接在 sparse 3D shell 聚合，并原生输出 metric point map/内参
 | MoGe-3 | `moge/model/v3.py` → `sparse_unet.py` → sparse blocks → `v2.py` |
 | 2K Retrofit | 论文 §3.2/3.3 → selector/active ratio/gate ablation；等待官方代码 |
 
-PXDepth 的独立复现记录见[论文指标对比](../results/eval-official-16/paper-comparison.md)；PXDepth–MoGe-3 同协议见[16 数据集报告](../../moge3/results/comparison.md)和[Spring 报告](../../moge3/results/spring/comparison.md)。
+上述汇总包括 PXDepth 的独立复现，以及 PXDepth 与 MoGe-3 在 16 个数据集和 Spring 上的同协议比较；解读时应保留各自的输入、对齐、mask 与运行范围约束。
 
 ## 10. 最终结论
 

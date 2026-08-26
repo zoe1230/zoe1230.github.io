@@ -28,7 +28,7 @@ export default withMermaid(
     lang: 'zh-CN',
     title: 'Zhanhong Chen',
     description:
-      'Master\'s student at Tianjin University. 3D vision, real-time stereo matching, and geometric reconstruction.',
+      'M.S., Tianjin University. 3D vision, real-time stereo matching, and geometric reconstruction.',
 
     base: '/',
     srcDir: '.',
@@ -57,6 +57,9 @@ export default withMermaid(
     },
 
     vite: {
+      optimizeDeps: {
+        include: ['mermaid'],
+      },
       server: {
         host: '127.0.0.1',
         port: 5173,
@@ -65,13 +68,33 @@ export default withMermaid(
       plugins: [
         {
           name: 'fix-windows-atfs-urls',
-          enforce: 'post',
+          enforce: 'pre',
+          configureServer(server) {
+            server.middlewares.use((req, _res, next) => {
+              if (req.url?.includes('/@fs/')) {
+                req.url = req.url
+                  .replace(/\\/g, '/')
+                  .replace(/\/@fs\/([A-Za-z])%3A\//i, '/@fs/$1:/')
+              }
+              next()
+            })
+          },
           transformIndexHtml(html) {
             return html.replace(
               /src="([^"]*@fs\/[^"]+)"/g,
               (_match, src: string) => {
-                const normalized = encodeURI(src.replace(/\\/g, '/'))
-                return `src="${normalized}"`
+                const unix = src.replace(/\\/g, '/')
+                let decoded = unix
+                try {
+                  decoded = decodeURI(unix)
+                } catch {
+                  decoded = unix
+                }
+                const vp = decoded.replace(/\\/g, '/').indexOf('/node_modules/vitepress/')
+                if (vp !== -1) {
+                  return `src="${decoded.replace(/\\/g, '/').slice(vp)}"`
+                }
+                return `src="${encodeURI(decoded.replace(/\\/g, '/'))}"`
               },
             )
           },
@@ -82,8 +105,13 @@ export default withMermaid(
     themeConfig: {
       nav: [
         { text: '首页', link: '/' },
-        { text: '生成式基础', link: '/generative-foundations/' },
-        { text: '细结构深度', link: '/fine-detail-depth/' },
+        {
+          text: 'Blog',
+          items: [
+            { text: '生成式基础', link: '/generative-foundations/' },
+            { text: '细结构深度', link: '/fine-detail-depth/' },
+          ],
+        },
       ],
 
       sidebar: {
@@ -152,8 +180,6 @@ export default withMermaid(
       },
 
       search: searchZh,
-
-      socialLinks: [{ icon: 'github', link: 'https://github.com/zoe1230' }],
 
       lastUpdated: {
         text: '最后更新',

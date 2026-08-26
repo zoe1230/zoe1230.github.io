@@ -1,7 +1,5 @@
 # 细结构单目深度估计：六种方法的统一知识链
 
-网页版：[https://zoe1230.github.io/fine-detail-depth/](https://zoe1230.github.io/fine-detail-depth/)
-
 > 资料核对日期：2026-08-26。本文档集讨论论文与公开实现截至该日期的状态；后续仓库更新可能改变代码入口、权重和复现结论。
 
 [开始阅读：问题与基础](01-problem-and-foundations.md) · [最终比较与选型](08-comparison-metrics-and-selection.md) · [生成式建模基础链](../tutorial-generative-foundations/README.md)
