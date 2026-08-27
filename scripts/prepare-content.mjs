@@ -1,5 +1,13 @@
-import { copyFileSync, existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs'
-import { dirname, join, resolve } from 'node:path'
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs'
+import { dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -21,11 +29,39 @@ function seriesNames(notesRoot) {
     .filter((name) => existsSync(join(notesRoot, name, 'README.md')))
 }
 
-function copyMarkdown(src, dest) {
+const contentExtensions = new Set(['.md', '.png', '.jpg', '.jpeg', '.webp', '.svg'])
+const ignoredGeneratedDirs = new Set(
+  readFileSync(join(root, '.gitignore'), 'utf8')
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => /^\/[^/]+\/$/.test(line))
+    .map((line) => line.slice(1, -1)),
+)
+
+function resetGeneratedSeries(dest, name) {
+  const expected = resolve(root, name)
+  if (
+    resolve(dest) !== expected ||
+    dirname(expected) !== root ||
+    !ignoredGeneratedDirs.has(name)
+  ) {
+    throw new Error(`prepare-content: refusing to clean unexpected path ${dest}`)
+  }
+  rmSync(dest, { recursive: true, force: true })
+}
+
+function copyContent(src, dest) {
   mkdirSync(dest, { recursive: true })
-  for (const name of readdirSync(src)) {
-    if (!name.endsWith('.md')) continue
-    copyFileSync(join(src, name), join(dest, name))
+  for (const entry of readdirSync(src, { withFileTypes: true })) {
+    if (entry.name.startsWith('.')) continue
+    const source = join(src, entry.name)
+    const target = join(dest, entry.name)
+    if (entry.isDirectory()) {
+      copyContent(source, target)
+      continue
+    }
+    if (!entry.isFile() || !contentExtensions.has(extname(entry.name).toLowerCase())) continue
+    copyFileSync(source, target)
   }
 }
 
@@ -51,7 +87,8 @@ if (series.length === 0) {
 for (const name of series) {
   const src = join(notesRoot, name)
   const dest = join(root, name)
-  copyMarkdown(src, dest)
+  resetGeneratedSeries(dest, name)
+  copyContent(src, dest)
   ensureIndex(dest)
   console.log(`prepare-content: copied ${name} from ${src}`)
 }
