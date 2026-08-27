@@ -17,15 +17,5 @@ const isHome = computed(
     <template v-for="(_, name) in slots" :key="name" #[name]="slotProps">
       <slot :name="name" v-bind="slotProps ?? {}" />
     </template>
-    <template #page-bottom>
-      <footer class="site-footer">
-        <p class="site-footer-copy">© Zhanhong Chen, 2026</p>
-      </footer>
-    </template>
-    <template #doc-after>
-      <footer class="site-footer">
-        <p class="site-footer-copy">© Zhanhong Chen, 2026</p>
-      </footer>
-    </template>
   </Layout>
 </template>
