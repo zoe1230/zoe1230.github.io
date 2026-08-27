@@ -7,7 +7,6 @@ sidebar: false
 aside: false
 outline: false
 lastUpdated: false
-footer: false
 ---
 
 <header class="blog-header">

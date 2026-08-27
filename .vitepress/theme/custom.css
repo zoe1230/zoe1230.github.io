@@ -36,7 +36,6 @@
 .Layout.is-home .VPNav,
 .Layout.is-home .VPSkipLink,
 .Layout.is-home .VPLocalNav,
-.Layout.is-home .VPFooter,
 .Layout.is-home .VPSidebar {
   display: none !important;
 }
@@ -52,7 +51,7 @@
 .Layout.is-home .VPPage {
   max-width: 920px;
   margin: 0 auto;
-  padding: 48px 24px 80px;
+  padding: 48px 24px 40px;
   font-size: 16.5px;
   line-height: 1.7;
   color: var(--vp-c-text-1);
@@ -544,6 +543,23 @@
   font-size: 15px;
   font-weight: 400;
   line-height: 1.35;
+}
+
+.VPFooter {
+  padding: 28px 24px 48px !important;
+  border-top: none !important;
+  background-color: var(--vp-c-bg) !important;
+}
+
+.VPFooter .message {
+  display: none !important;
+}
+
+.VPFooter .copyright {
+  color: var(--vp-c-text-1);
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
 @media (max-width: 640px) {

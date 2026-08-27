@@ -8,7 +8,6 @@ sidebar: false
 aside: false
 outline: false
 lastUpdated: false
-footer: false
 ---
 
 <div class="home-hero">
