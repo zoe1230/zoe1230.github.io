@@ -31,7 +31,7 @@ I received my M.S. in Instrument Science and Technology from Tianjin University,
     </span>
     GitHub
   </a>
-  <a href="/blog/">
+  <a href="/blog">
     <span class="home-link-icon" aria-hidden="true">
       <svg viewBox="0 0 24 24" width="13" height="13"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2Zm-9.5 14H6v-1.8c1.2 0 2.2-.5 2.2-1.6 0-.8-.4-1.2-1.3-1.8-.7-.4-1-.7-1-1.1 0-.5.4-.8 1-.8.6 0 1 .2 1.4.5l.6-1.3C9.4 9.6 8.6 9.3 7.7 9.3c-1.5 0-2.5.9-2.5 2.1 0 1 .6 1.6 1.6 2.2.7.4 1 0.7 1 1.2 0 .5-.4.9-1.2.9H8v1.3h1.5V17Zm7.8-.2h-1.6l-2.2-3.3v3.3h-1.5V9.5h1.6l2.2 3.3V9.5h1.5v7.3Z"/></svg>
     </span>
