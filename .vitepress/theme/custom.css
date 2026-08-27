@@ -19,13 +19,18 @@
   max-width: 100%;
 }
 
-/* Math blocks: allow horizontal scroll when formulas are long */
-.vp-doc mjx-container[display='true'],
-.vp-doc .math-display,
-.vp-doc .MathJax {
+/* Display math: stay in column width; scroll if a formula is still wide */
+.vp-doc mjx-container[display='true'] {
+  display: block;
+  max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
+  text-align: center;
+}
+
+.vp-doc mjx-container[display='true'] svg {
   max-width: 100%;
+  height: auto;
 }
 
 .Layout.is-home .VPNav,
