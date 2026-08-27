@@ -645,6 +645,28 @@
   cursor: grab;
   user-select: none;
   will-change: transform;
+  transition: opacity 0.15s ease;
+}
+
+.media-viewer.is-loading .media-viewer-content,
+.media-viewer.has-error .media-viewer-content {
+  opacity: 0;
+}
+
+.media-viewer-status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: min(80vw, 28rem);
+  padding: 0.65rem 0.9rem;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(126, 201, 198, 0.42);
+  border-radius: 4px;
+  background: rgba(16, 34, 38, 0.9);
+  color: #d8f1ef;
+  font-size: 0.9rem;
+  text-align: center;
+  pointer-events: none;
 }
 
 .media-viewer.is-panning .media-viewer-content {

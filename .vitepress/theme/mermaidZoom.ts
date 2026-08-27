@@ -135,7 +135,7 @@ function openViewer(media: HTMLImageElement | SVGSVGElement) {
   closeViewer()
 
   const overlay = document.createElement('div')
-  overlay.className = 'media-viewer'
+  overlay.className = 'media-viewer is-loading'
   overlay.setAttribute('role', 'dialog')
   overlay.setAttribute('aria-modal', 'true')
   overlay.setAttribute('aria-label', '图片查看器')
@@ -147,6 +147,13 @@ function openViewer(media: HTMLImageElement | SVGSVGElement) {
   content.appendChild(media)
   stage.appendChild(content)
   overlay.appendChild(stage)
+
+  const status = document.createElement('div')
+  status.className = 'media-viewer-status'
+  status.setAttribute('role', 'status')
+  status.setAttribute('aria-live', 'polite')
+  status.textContent = '图片加载中…'
+  overlay.appendChild(status)
 
   let baseWidth = 1
   let baseHeight = 1
@@ -203,14 +210,13 @@ function openViewer(media: HTMLImageElement | SVGSVGElement) {
   )
 
   let dragging = false
-  let dragDistance = 0
   let lastX = 0
   let lastY = 0
 
   content.addEventListener('pointerdown', (event) => {
     if (event.button !== 0) return
+    event.preventDefault()
     dragging = true
-    dragDistance = 0
     lastX = event.clientX
     lastY = event.clientY
     overlay.classList.add('is-panning')
@@ -221,7 +227,6 @@ function openViewer(media: HTMLImageElement | SVGSVGElement) {
     if (!dragging) return
     const dx = event.clientX - lastX
     const dy = event.clientY - lastY
-    dragDistance += Math.hypot(dx, dy)
     x += dx
     y += dy
     lastX = event.clientX
@@ -229,17 +234,16 @@ function openViewer(media: HTMLImageElement | SVGSVGElement) {
     applyTransform()
   })
 
-  const stopPan = (event: PointerEvent, closeOnClick = false) => {
+  const stopPan = (event: PointerEvent) => {
     if (!dragging) return
     dragging = false
     overlay.classList.remove('is-panning')
     if (content.hasPointerCapture(event.pointerId)) {
       content.releasePointerCapture(event.pointerId)
     }
-    if (closeOnClick && dragDistance < 5) closeViewer()
   }
 
-  content.addEventListener('pointerup', (event) => stopPan(event, true))
+  content.addEventListener('pointerup', (event) => stopPan(event))
   content.addEventListener('pointercancel', (event) => stopPan(event))
   stage.addEventListener('click', (event) => {
     if (event.target === stage) closeViewer()
@@ -249,12 +253,21 @@ function openViewer(media: HTMLImageElement | SVGSVGElement) {
     if (event.key === 'Escape') closeViewer()
   }
   document.addEventListener('keydown', onKeydown)
-  activeViewerCleanup = () => document.removeEventListener('keydown', onKeydown)
-
   previousBodyOverflow = document.body.style.overflow
   document.body.style.overflow = 'hidden'
   document.body.appendChild(overlay)
   activeViewer = overlay
+
+  const finishLoading = () => {
+    overlay.classList.remove('is-loading', 'has-error')
+    status.remove()
+  }
+
+  const showError = () => {
+    overlay.classList.remove('is-loading')
+    overlay.classList.add('has-error')
+    status.textContent = '图片加载失败，请关闭后重试'
+  }
 
   const initialize = () => {
     if (media instanceof SVGSVGElement) {
@@ -264,16 +277,36 @@ function openViewer(media: HTMLImageElement | SVGSVGElement) {
       media.setAttribute('width', String(baseWidth))
       media.setAttribute('height', String(baseHeight))
     } else {
-      baseWidth = Math.max(1, media.naturalWidth || media.width)
-      baseHeight = Math.max(1, media.naturalHeight || media.height)
+      if (!media.naturalWidth || !media.naturalHeight) {
+        showError()
+        return
+      }
+      baseWidth = media.naturalWidth
+      baseHeight = media.naturalHeight
       media.width = baseWidth
       media.height = baseHeight
     }
-    requestAnimationFrame(reset)
+    reset()
+    finishLoading()
   }
 
-  if (media instanceof HTMLImageElement && !media.complete) {
-    media.addEventListener('load', initialize, { once: true })
+  const onLoad = () => initialize()
+  const onError = () => showError()
+  activeViewerCleanup = () => {
+    document.removeEventListener('keydown', onKeydown)
+    media.removeEventListener('load', onLoad)
+    media.removeEventListener('error', onError)
+  }
+
+  if (media instanceof HTMLImageElement) {
+    media.addEventListener('error', onError, { once: true })
+    if (!media.complete) {
+      media.addEventListener('load', onLoad, { once: true })
+    } else if (media.naturalWidth > 0) {
+      initialize()
+    } else {
+      showError()
+    }
   } else {
     initialize()
   }
@@ -293,7 +326,7 @@ function preparePaperFigures(root: ParentNode) {
         const enlarged = new Image()
         enlarged.alt = image.alt
         enlarged.decoding = 'async'
-        enlarged.src = link.href || image.currentSrc || image.src
+        enlarged.src = image.currentSrc || image.src || link.href
         openViewer(enlarged)
       })
     })
