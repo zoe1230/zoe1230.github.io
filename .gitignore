@@ -1,6 +1,7 @@
 node_modules/
 .vitepress/cache/
 .vitepress/dist/
+.notes/
 /generative-foundations/
 /fine-detail-depth/
 .DS_Store

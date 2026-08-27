@@ -24,19 +24,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Checkout generative-foundations tutorial
+      - name: Checkout notes
         uses: actions/checkout@v5
         with:
-          repository: zoe1230/tutorial-generative-foundations
-          path: generative-foundations
-          fetch-depth: 0
-
-      - name: Checkout fine-detail-depth tutorial
-        continue-on-error: true
-        uses: actions/checkout@v5
-        with:
-          repository: zoe1230/tutorial-fine-detail-depth
-          path: fine-detail-depth
+          repository: zoe1230/notes
+          path: .notes
           fetch-depth: 0
 
       - name: Setup Node

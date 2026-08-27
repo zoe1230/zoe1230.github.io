@@ -1,6 +1,5 @@
 import { defineConfig } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
-import { rewriteTutorialLinks } from './rewriteTutorialLinks'
 
 const searchZh = {
   provider: 'local' as const,
@@ -37,6 +36,7 @@ export default withMermaid(
       'node_modules/**',
       '.github/**',
       '.vitepress/dist/**',
+      '.notes/**',
       '**/node_modules/**',
       '**/.vitepress/**',
     ],
@@ -47,9 +47,6 @@ export default withMermaid(
 
     markdown: {
       math: true,
-      config(md) {
-        rewriteTutorialLinks(md)
-      },
       theme: {
         light: 'github-light',
         dark: 'github-dark',

@@ -4,26 +4,29 @@ import { fileURLToPath } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 
-const jobs = [
-  {
-    src: resolve(root, '../tutorial-generative-foundations'),
-    dest: resolve(root, 'generative-foundations'),
-  },
-  {
-    src: resolve(root, '../tutorial-fine-detail-depth'),
-    fallback: resolve(root, 'tutorials/fine-detail-depth'),
-    dest: resolve(root, 'fine-detail-depth'),
-  },
-]
+function resolveNotesRoot() {
+  const sibling = resolve(root, '../notes')
+  const ci = resolve(root, '.notes')
+  if (existsSync(join(sibling, 'README.md'))) return sibling
+  if (existsSync(join(ci, 'README.md'))) return ci
+  throw new Error(
+    'prepare-content: notes not found. Clone zoe1230/notes next to this repo, or checkout it to .notes in CI.',
+  )
+}
+
+function seriesNames(notesRoot) {
+  return readdirSync(notesRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && !entry.name.startsWith('.'))
+    .map((entry) => entry.name)
+    .filter((name) => existsSync(join(notesRoot, name, 'README.md')))
+}
 
 function copyMarkdown(src, dest) {
-  if (!existsSync(src)) return false
   mkdirSync(dest, { recursive: true })
   for (const name of readdirSync(src)) {
     if (!name.endsWith('.md')) continue
     copyFileSync(join(src, name), join(dest, name))
   }
-  return true
 }
 
 function ensureIndex(dest) {
@@ -39,14 +42,16 @@ function ensureIndex(dest) {
   }
 }
 
-for (const job of jobs) {
-  const destHasReadme = existsSync(join(job.dest, 'README.md'))
-  const copied = copyMarkdown(job.src, job.dest)
-  const fromFallback =
-    !copied && !destHasReadme && job.fallback
-      ? copyMarkdown(job.fallback, job.dest)
-      : false
-  const source = copied ? job.src : fromFallback ? job.fallback : job.dest
-  console.log(`prepare-content: using markdown from ${source}`)
-  ensureIndex(job.dest)
+const notesRoot = resolveNotesRoot()
+const series = seriesNames(notesRoot)
+if (series.length === 0) {
+  throw new Error(`prepare-content: no series folders with README.md in ${notesRoot}`)
+}
+
+for (const name of series) {
+  const src = join(notesRoot, name)
+  const dest = join(root, name)
+  copyMarkdown(src, dest)
+  ensureIndex(dest)
+  console.log(`prepare-content: copied ${name} from ${src}`)
 }

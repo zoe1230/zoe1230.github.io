@@ -7,13 +7,4 @@ npm ci
 npm run docs:dev
 ```
 
-Tutorial Markdown is copied in at build time:
-
-- [tutorial-generative-foundations](https://github.com/zoe1230/tutorial-generative-foundations)
-- Local sibling `tutorial-fine-detail-depth/`, with a copy under `tutorials/fine-detail-depth/` until that folder is also a GitHub repository
-
-After pushing `main`, finish publishing in GitHub:
-
-1. This repo → Settings → Pages → Source: **GitHub Actions**
-2. This repo → Settings → Default branch: **main** (keep `master` as the old Jekyll archive)
-3. [tutorial-generative-foundations](https://github.com/zoe1230/tutorial-generative-foundations) → Settings → Pages → **Disable**
+Tutorial Markdown lives in [`zoe1230/notes`](https://github.com/zoe1230/notes) and is copied in at build time. Clone it as a sibling of this repository, or let GitHub Actions check it out to `.notes/`.
