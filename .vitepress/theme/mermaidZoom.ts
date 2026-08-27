@@ -1,7 +1,7 @@
 const MIN_SCALE = 0.35
 const MAX_SCALE = 8
 const STEP = 1.18
-const PADDING = 32
+const PADDING = 40
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
@@ -40,13 +40,25 @@ function wrapDiagram(el: HTMLElement) {
 }
 
 function naturalSize(svg: SVGSVGElement) {
+  let width = 0
+  let height = 0
+  try {
+    const bbox = svg.getBBox()
+    width = Math.max(width, bbox.width)
+    height = Math.max(height, bbox.height)
+  } catch {
+    /* SVG may not be in the layout tree yet */
+  }
   const box = svg.viewBox.baseVal
   if (box && box.width > 0 && box.height > 0) {
-    return { width: box.width, height: box.height }
+    width = Math.max(width, box.width)
+    height = Math.max(height, box.height)
   }
-  const width = Number.parseFloat(svg.getAttribute('width') || '') || svg.getBBox().width
-  const height = Number.parseFloat(svg.getAttribute('height') || '') || svg.getBBox().height
-  return { width, height }
+  const attrWidth = Number.parseFloat(svg.getAttribute('width') || '')
+  const attrHeight = Number.parseFloat(svg.getAttribute('height') || '')
+  if (attrWidth > 0) width = Math.max(width, attrWidth)
+  if (attrHeight > 0) height = Math.max(height, attrHeight)
+  return { width: width + 16, height: height + 16 }
 }
 
 function ensureScaler(svg: SVGSVGElement) {

@@ -203,15 +203,17 @@ export default withMermaid(
       useMaxWidth: false,
       securityLevel: 'loose',
       themeVariables: {
-        fontFamily: 'trebuchet ms, verdana, arial, sans-serif',
-        fontSize: '16px',
+        fontFamily:
+          'ui-sans-serif, system-ui, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif',
+        fontSize: '15px',
       },
       flowchart: {
         htmlLabels: true,
         useMaxWidth: false,
-        padding: 16,
-        nodeSpacing: 36,
-        rankSpacing: 48,
+        padding: 14,
+        nodeSpacing: 40,
+        rankSpacing: 56,
+        wrappingWidth: 168,
       },
     },
   }),

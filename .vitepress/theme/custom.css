@@ -448,22 +448,23 @@
 .mermaid-viewport div.mermaid {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   box-sizing: border-box;
   min-width: 100%;
   min-height: 100%;
   margin: 0;
-  padding: 1.25rem;
-  font-family: 'trebuchet ms', verdana, arial, sans-serif;
-  font-size: 16px;
+  padding: 1.5rem 1.25rem;
+  font-family: ui-sans-serif, system-ui, 'Segoe UI', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  font-size: 15px;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.35;
 }
 
 .mermaid-scaler {
   position: relative;
   flex: 0 0 auto;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .mermaid-viewport .mermaid svg {
@@ -523,16 +524,23 @@
   text-decoration: none;
 }
 
+.vp-doc .mermaid foreignObject,
+.mermaid-viewport .mermaid foreignObject {
+  overflow: visible;
+}
+
 .vp-doc .mermaid .nodeLabel,
 .vp-doc .mermaid .edgeLabel,
 .vp-doc .mermaid .label,
 .mermaid-viewport .mermaid .nodeLabel,
 .mermaid-viewport .mermaid .edgeLabel {
   box-sizing: content-box;
-  font-family: 'trebuchet ms', verdana, arial, sans-serif;
-  font-size: 16px;
+  overflow: visible;
+  font-family: ui-sans-serif, system-ui, 'Segoe UI', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  font-size: 15px;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.35;
 }
 
 @media (max-width: 640px) {
