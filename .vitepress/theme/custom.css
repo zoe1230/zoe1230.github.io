@@ -547,7 +547,7 @@
 
 .VPFooter {
   padding: 28px 24px 48px !important;
-  border-top: none !important;
+  border-top: 1px solid var(--vp-c-divider) !important;
   background-color: var(--vp-c-bg) !important;
 }
 
