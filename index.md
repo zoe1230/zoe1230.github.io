@@ -41,7 +41,7 @@ I received my M.S. in Instrument Science and Technology from Tianjin University,
 
 </div>
 
-<img class="home-avatar" src="/avatar.jpg" alt="Portrait of Zhanhong Chen" />
+<img class="home-avatar" src="/avatar.webp" alt="Portrait of Zhanhong Chen" width="720" height="720" decoding="async" />
 
 </div>
 
@@ -58,7 +58,7 @@ My research focuses on efficient and accurate stereo matching for 3D perception.
 <div class="pub-entry">
 
 <a class="pub-thumb" href="https://doi.org/10.1109/lra.2026.3703239">
-  <img src="/cirnet.png" alt="CIRNet architecture" />
+  <img src="/cirnet.webp" alt="CIRNet architecture" width="1024" height="422" loading="lazy" decoding="async" />
 </a>
 
 <div class="pub-body">
