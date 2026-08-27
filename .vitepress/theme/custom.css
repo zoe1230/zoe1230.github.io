@@ -545,21 +545,33 @@
   line-height: 1.35;
 }
 
+/* VitePress hides .VPFooter.has-sidebar on docs pages. Use a layout-bottom
+   footer instead so the divider and copyright stay visible everywhere. */
 .VPFooter {
-  padding: 28px 24px 48px !important;
-  border-top: 1px solid var(--vp-c-divider) !important;
-  background-color: var(--vp-c-bg) !important;
-}
-
-.VPFooter .message {
   display: none !important;
 }
 
-.VPFooter .copyright {
+.site-footer {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 24px 24px 40px;
+  border-top: 1px solid rgba(60, 60, 67, 0.18);
+  background-color: var(--vp-c-bg);
+  text-align: center;
+}
+
+.dark .site-footer {
+  border-top-color: rgba(235, 235, 245, 0.18);
+}
+
+.site-footer-copy {
+  margin: 0;
   color: var(--vp-c-text-1);
   font-size: 0.95rem;
   font-weight: 400;
   letter-spacing: 0.01em;
+  line-height: 1.6;
 }
 
 @media (max-width: 640px) {

@@ -196,10 +196,6 @@ export default withMermaid(
       darkModeSwitchLabel: '外观',
       lightModeSwitchTitle: '切换到浅色模式',
       darkModeSwitchTitle: '切换到深色模式',
-
-      footer: {
-        copyright: '© Zhanhong Chen, 2026',
-      },
     },
 
     mermaid: {
