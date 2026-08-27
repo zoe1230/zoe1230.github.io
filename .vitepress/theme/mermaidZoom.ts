@@ -1,10 +1,16 @@
 const MIN_SCALE = 0.35
 const MAX_SCALE = 8
 const STEP = 1.18
-const PADDING = 40
+const PADDING = 20
+const MAX_VIEW_HEIGHT = 680
+const MAX_VIEW_VH = 0.72
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
+}
+
+function maxCanvasHeight() {
+  return Math.min(window.innerHeight * MAX_VIEW_VH, MAX_VIEW_HEIGHT)
 }
 
 function wrapAll(root: ParentNode) {
@@ -58,7 +64,7 @@ function naturalSize(svg: SVGSVGElement) {
   const attrHeight = Number.parseFloat(svg.getAttribute('height') || '')
   if (attrWidth > 0) width = Math.max(width, attrWidth)
   if (attrHeight > 0) height = Math.max(height, attrHeight)
-  return { width: width + 16, height: height + 16 }
+  return { width: width + 8, height: height + 8 }
 }
 
 function ensureScaler(svg: SVGSVGElement) {
@@ -78,6 +84,7 @@ function bindZoom(viewport: HTMLElement, canvas: HTMLElement, stage: HTMLElement
   let svgEl: SVGSVGElement | null = null
   let scalerEl: HTMLElement | null = null
   let userAdjusted = false
+  let lastWidth = 0
 
   const ensureBaseSize = () => {
     const svg = stage.querySelector('svg')
@@ -100,7 +107,7 @@ function bindZoom(viewport: HTMLElement, canvas: HTMLElement, stage: HTMLElement
   const fitScale = () => {
     if (!baseWidth || !baseHeight) return 1
     const availW = Math.max(1, canvas.clientWidth - PADDING * 2)
-    const availH = Math.max(1, canvas.clientHeight - PADDING * 2)
+    const availH = Math.max(1, maxCanvasHeight() - PADDING * 2)
     return clamp(Math.min(availW / baseWidth, availH / baseHeight), MIN_SCALE, MAX_SCALE)
   }
 
@@ -113,8 +120,15 @@ function bindZoom(viewport: HTMLElement, canvas: HTMLElement, stage: HTMLElement
     svg.style.transformOrigin = '0 0'
     scalerEl.style.width = `${width}px`
     scalerEl.style.height = `${height}px`
-    stage.style.minWidth = `${Math.max(canvas.clientWidth, width + PADDING * 2)}px`
-    stage.style.minHeight = `${Math.max(canvas.clientHeight, height + PADDING * 2)}px`
+
+    const contentW = width + PADDING * 2
+    const contentH = height + PADDING * 2
+    if (!userAdjusted) {
+      canvas.style.height = `${Math.min(maxCanvasHeight(), contentH)}px`
+    }
+
+    stage.style.minWidth = `${Math.max(canvas.clientWidth, contentW)}px`
+    stage.style.minHeight = `${Math.max(canvas.clientHeight, contentH)}px`
   }
 
   const centerView = () => {
@@ -217,7 +231,10 @@ function bindZoom(viewport: HTMLElement, canvas: HTMLElement, stage: HTMLElement
   canvas.addEventListener('pointercancel', stopPan)
 
   const resizeObserver = new ResizeObserver(() => {
-    if (!userAdjusted) fitAndCenter()
+    if (userAdjusted) return
+    if (Math.abs(canvas.clientWidth - lastWidth) < 1) return
+    lastWidth = canvas.clientWidth
+    fitAndCenter()
   })
   resizeObserver.observe(canvas)
 }

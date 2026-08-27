@@ -419,7 +419,6 @@
   position: relative;
   overflow: hidden;
   margin: 1.25rem 0;
-  min-height: min(56vh, 520px);
   max-height: min(72vh, 680px);
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
@@ -428,7 +427,7 @@
 
 .mermaid-canvas {
   width: 100%;
-  height: min(56vh, 520px);
+  min-height: 6rem;
   max-height: min(72vh, 680px);
   overflow: auto;
   cursor: grab;
@@ -448,12 +447,11 @@
 .mermaid-viewport div.mermaid {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   box-sizing: border-box;
   min-width: 100%;
-  min-height: 100%;
   margin: 0;
-  padding: 1.5rem 1.25rem;
+  padding: 0.75rem 1rem;
   font-family: ui-sans-serif, system-ui, 'Segoe UI', 'PingFang SC',
     'Microsoft YaHei', sans-serif;
   font-size: 15px;
