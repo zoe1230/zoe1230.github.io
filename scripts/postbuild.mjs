@@ -1,9 +1,15 @@
-import { copyFileSync, existsSync, readdirSync } from 'node:fs'
-import { dirname, join, resolve } from 'node:path'
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+} from 'node:fs'
+import { dirname, extname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = resolve(root, '.vitepress/dist')
+const staticExtensions = new Set(['.png', '.jpg', '.jpeg', '.webp', '.svg'])
 
 function resolveNotesRoot() {
   const sibling = resolve(root, '../notes')
@@ -31,6 +37,35 @@ function aliasReadme(dirName) {
   console.log('postbuild: wrote', readmeHtml)
 }
 
-for (const name of seriesNames(resolveNotesRoot())) {
+function copyStaticAssets(source, destination) {
+  if (!existsSync(source)) return 0
+  mkdirSync(destination, { recursive: true })
+
+  let copied = 0
+  for (const entry of readdirSync(source, { withFileTypes: true })) {
+    const sourcePath = join(source, entry.name)
+    const destinationPath = join(destination, entry.name)
+    if (entry.isDirectory()) {
+      copied += copyStaticAssets(sourcePath, destinationPath)
+    } else if (
+      entry.isFile() &&
+      staticExtensions.has(extname(entry.name).toLowerCase())
+    ) {
+      copyFileSync(sourcePath, destinationPath)
+      copied += 1
+    }
+  }
+  return copied
+}
+
+const notesRoot = resolveNotesRoot()
+for (const name of seriesNames(notesRoot)) {
   aliasReadme(name)
+  const copied = copyStaticAssets(
+    resolve(root, name, 'assets'),
+    resolve(dist, name, 'assets'),
+  )
+  if (copied > 0) {
+    console.log(`postbuild: copied ${copied} static assets for ${name}`)
+  }
 }
