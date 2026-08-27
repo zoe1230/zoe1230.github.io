@@ -545,33 +545,34 @@
   line-height: 1.35;
 }
 
-/* VitePress hides .VPFooter.has-sidebar on docs pages. Use a layout-bottom
-   footer instead so the divider and copyright stay visible everywhere. */
+/* Keep the default VitePress footer hidden; the custom mark sits in the
+   article column so the rule is only as wide as the copyright line. */
 .VPFooter {
   display: none !important;
 }
 
 .site-footer {
   box-sizing: border-box;
-  width: 100%;
-  margin: 0;
-  padding: 24px 24px 40px;
-  border-top: 1px solid rgba(60, 60, 67, 0.18);
-  background-color: var(--vp-c-bg);
+  width: max-content;
+  max-width: 100%;
+  margin: 2.25rem auto 0;
+  padding: 0.85rem 0.7rem 0;
+  border-top: 1px solid rgba(60, 60, 67, 0.2);
+  background: transparent;
   text-align: center;
 }
 
 .dark .site-footer {
-  border-top-color: rgba(235, 235, 245, 0.18);
+  border-top-color: rgba(235, 235, 245, 0.2);
 }
 
 .site-footer-copy {
   margin: 0;
-  color: var(--vp-c-text-1);
-  font-size: 0.95rem;
+  color: var(--vp-c-text-2);
+  font-size: 0.82rem;
   font-weight: 400;
-  letter-spacing: 0.01em;
-  line-height: 1.6;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
 }
 
 @media (max-width: 640px) {
